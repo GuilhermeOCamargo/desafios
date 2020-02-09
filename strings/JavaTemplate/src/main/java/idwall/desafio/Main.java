@@ -40,7 +40,7 @@ public class Main {
 
         // Run IdwallFormatter
         final StringFormatter sf = new IdwallFormatter();
-        String outputText = sf.format(text, 50);
+        String outputText = sf.format(text, true);
 
         // Print output text
         System.out.println("Output: ");

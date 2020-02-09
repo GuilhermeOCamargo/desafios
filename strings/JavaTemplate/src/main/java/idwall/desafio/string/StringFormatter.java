@@ -24,7 +24,7 @@ public abstract class StringFormatter {
      * @param text
      * @return
      */
-    public abstract String format(String text);
+    public abstract String format(String text, boolean mustJustify);
     /**
      * It receives a text and should return it formatted
      *
@@ -32,7 +32,7 @@ public abstract class StringFormatter {
      * @param limit
      * @return
      */
-    public abstract String format(String text, Integer limit);
+    public abstract String format(String text, Integer limit, boolean mustJustify);
 
     protected Integer getDefaultLimit() {
         return defaultLimit;
