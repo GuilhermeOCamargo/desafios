@@ -3,10 +3,6 @@ package idwall.desafio.string;
  * Created by Rodrigo Catão Araujo on 06/02/2018.
  */
 public class IdwallFormatter extends StringFormatter {
-    @Override
-    public String format(String text, boolean mustJustify) {
-        return handleFormat(text, getDefaultLimit(), mustJustify);
-    }
 
     @Override
     public String format(String text, Integer limit, boolean mustJustify){

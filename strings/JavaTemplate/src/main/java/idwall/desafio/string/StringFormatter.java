@@ -22,14 +22,8 @@ public abstract class StringFormatter {
      * It receives a text and should return it formatted
      *
      * @param text
-     * @return
-     */
-    public abstract String format(String text, boolean mustJustify);
-    /**
-     * It receives a text and should return it formatted
-     *
-     * @param text
      * @param limit
+     * @param mustJustify
      * @return
      */
     public abstract String format(String text, Integer limit, boolean mustJustify);
