@@ -30,7 +30,33 @@
                             <mainClass>idwall.desafio.Main</mainClass>
                         </manifest>
                     </archive>
+                    <finalName>IdWallFormatter</finalName>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <!-- bind to the packaging phase -->
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>idwall.desafio.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>IdWallFormatter</finalName>
+                </configuration>
+
             </plugin>
         </plugins>
     </build>
