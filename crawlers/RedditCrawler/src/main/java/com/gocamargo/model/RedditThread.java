@@ -33,12 +33,10 @@ public class RedditThread {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("RedditThread{").append("\n")
-                .append("title: ").append(title).append("\n")
-                .append("commentsLink: ").append(commentsLink).append("\n")
-                .append("score: ").append(score).append("\n")
-                .append("subreddit: ").append(subreddit).append("\n")
-                .append('}');
+        sb.append("TITLE: ").append(title).append("\n")
+                .append("LINK: ").append(commentsLink).append("\n")
+                .append("SCORE: ").append(score).append("\n")
+                .append("SUBREDDIT: ").append(subreddit).append("\n");
         return sb.toString();
     }
 }

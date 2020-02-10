@@ -1,5 +1,6 @@
 package com.gocamargo.service;
 
+import com.gocamargo.exception.ConnectionException;
 import com.gocamargo.model.RedditThread;
 import com.gocamargo.util.ConnectionUtil;
 import com.gocamargo.util.FileUtil;
@@ -21,14 +22,22 @@ public class RedditConnectionService {
 
     public List<RedditThread> getTopThreadsFromCsv(String path, String fileName){
         List<String> subredditsToSearch = FileUtil.readFile(path, fileName);
+        return createListOfThreads(subredditsToSearch);
+    }
+
+    public List<RedditThread> createListOfThreads(List<String> subredditsToSearch){
         List<RedditThread> topThreads = new ArrayList<>();
         for (String subreddit:subredditsToSearch) {
-            getThreads(subreddit)
-                    .forEach(element -> {
-                        RedditThread thread = this.createSubreddit(element);
-                        if(validateThread(thread))
-                            topThreads.add(this.createSubreddit(element));
-                    });
+            try{
+                getThreads(subreddit)
+                        .forEach(element -> {
+                            RedditThread thread = this.createSubreddit(element);
+                            if(validateThread(thread))
+                                topThreads.add(this.createSubreddit(element));
+                        });
+            }catch (ConnectionException e){
+//                throw new RuntimeException("Desculpe, nao foi possivel completar a busca referente a ".concat(subreddit).concat(" :("));
+            }
         }
         return topThreads;
     }
@@ -37,7 +46,7 @@ public class RedditConnectionService {
         return Objects.nonNull(thread) && thread.getScore() >= 5000;
     }
 
-    private Elements getThreads(String subreddit){
+    private Elements getThreads(String subreddit) {
         return this.connectionUtil.getConnection(this.REDDIT_URL.concat("/r/").concat(subreddit))
                 .getElementsByClass("thing");
     }
