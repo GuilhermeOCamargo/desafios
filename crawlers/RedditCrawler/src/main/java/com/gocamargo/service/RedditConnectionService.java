@@ -1,9 +1,13 @@
 package com.gocamargo.service;
 
-import com.gocamargo.model.Subreddit;
+import com.gocamargo.model.RedditThread;
 import com.gocamargo.util.ConnectionUtil;
+import com.gocamargo.util.FileUtil;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RedditConnectionService {
@@ -15,17 +19,30 @@ public class RedditConnectionService {
         this.connectionUtil = new ConnectionUtil();
     }
 
-    public void print(String subreddit){
-        this.connectionUtil.getConnection(this.REDDIT_URL.concat("/r/").concat(subreddit))
-                .getElementsByClass("thing")
-                .forEach(element -> {
-                    Subreddit entity = this.createSubreddit(element);
-                    if(Objects.nonNull(entity) && entity.getScore() >= 5000)
-                        System.out.println(entity);
-                });
+    public List<RedditThread> getTopThreadsFromCsv(String path, String fileName){
+        List<String> subredditsToSearch = FileUtil.readFile(path, fileName);
+        List<RedditThread> topThreads = new ArrayList<>();
+        for (String subreddit:subredditsToSearch) {
+            getThreads(subreddit)
+                    .forEach(element -> {
+                        RedditThread thread = this.createSubreddit(element);
+                        if(validateThread(thread))
+                            topThreads.add(this.createSubreddit(element));
+                    });
+        }
+        return topThreads;
     }
 
-    private Subreddit createSubreddit(Element element){
+    private boolean validateThread(RedditThread thread){
+        return Objects.nonNull(thread) && thread.getScore() >= 5000;
+    }
+
+    private Elements getThreads(String subreddit){
+        return this.connectionUtil.getConnection(this.REDDIT_URL.concat("/r/").concat(subreddit))
+                .getElementsByClass("thing");
+    }
+
+    private RedditThread createSubreddit(Element element){
         if(element.hasAttr("data-score")){
             String title, commentsLink, subreddit;
             Integer score;
@@ -33,7 +50,7 @@ public class RedditConnectionService {
             commentsLink = this.REDDIT_URL.concat(element.attr("data-permalink"));
             score = Integer.parseInt(element.attr("data-score"));
             title = element.select("div.entry div.top-matter p a").eachText().get(0);
-            return new Subreddit(title, commentsLink, score, subreddit);
+            return new RedditThread(title, commentsLink, score, subreddit);
         }
         return null;
     }

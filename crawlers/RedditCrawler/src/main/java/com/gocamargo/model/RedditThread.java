@@ -1,13 +1,13 @@
 package com.gocamargo.model;
 
-public class Subreddit {
+public class RedditThread {
 
     private String title;
     private String commentsLink;
     private Integer score;
     private String subreddit;
 
-    public Subreddit(String title, String commentsLink, Integer score, String subreddit) {
+    public RedditThread(String title, String commentsLink, Integer score, String subreddit) {
         this.title = title;
         this.commentsLink = commentsLink;
         this.score = score;
@@ -33,7 +33,7 @@ public class Subreddit {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("Subreddit{").append("\n")
+        sb.append("RedditThread{").append("\n")
                 .append("title: ").append(title).append("\n")
                 .append("commentsLink: ").append(commentsLink).append("\n")
                 .append("score: ").append(score).append("\n")
