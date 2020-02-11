@@ -1,0 +1,8 @@
+FROM openjdk:11
+LABEL maintainer="Guilherme Camargo <guilherme.ocamargo@gmail.com>"
+
+ARG TELEGRAM_TOKEN=token
+ENV TELEGRAM_REDDIT_BOT=${TELEGRAM_TOKEN}
+
+ARG TELEGRAM_USERNAME=username
+ENV TELEGRAM_REDDIT_USERNAME=${TELEGRAM_USERNAME}
