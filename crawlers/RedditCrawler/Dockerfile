@@ -1,8 +1,8 @@
-FROM openjdk:11
+FROM maven:3.6.3-jdk-11
 LABEL maintainer="Guilherme Camargo <guilherme.ocamargo@gmail.com>"
 
-ARG TELEGRAM_TOKEN=token
-ENV TELEGRAM_REDDIT_BOT=${TELEGRAM_TOKEN}
+COPY . .
+RUN mvn clean install
+WORKDIR target
 
-ARG TELEGRAM_USERNAME=username
-ENV TELEGRAM_REDDIT_USERNAME=${TELEGRAM_USERNAME}
+ENTRYPOINT ["java", "-jar", "RedditTelegramBot-jar-with-dependencies.jar"]
