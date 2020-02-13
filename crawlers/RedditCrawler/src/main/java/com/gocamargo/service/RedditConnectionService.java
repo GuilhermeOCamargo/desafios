@@ -14,10 +14,12 @@ import java.util.Objects;
 public class RedditConnectionService {
 
     private ConnectionUtil connectionUtil;
-    private final String REDDIT_URL = "https://old.reddit.com";
+    private final String REDDIT_URL;
+
 
     public RedditConnectionService() {
         this.connectionUtil = new ConnectionUtil();
+        this.REDDIT_URL = System.getenv("REDDIT_URL");
     }
 
     public List<RedditThread> getTopThreadsFromCsv(String path, String fileName){
